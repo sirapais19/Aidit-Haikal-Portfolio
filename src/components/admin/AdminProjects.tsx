@@ -19,8 +19,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Edit, Trash } from "lucide-react";
+import { Plus, Edit, Trash, Upload, Image } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 
 // Define project type
 interface Project {
@@ -29,10 +31,12 @@ interface Project {
   description: string;
   tags: string[];
   githubUrl: string;
-  imageUrl: string;
+  imageUrl: string | null;
 }
 
 const AdminProjects = () => {
+  const { toast } = useToast();
+
   // Mock data for projects
   const [projects, setProjects] = useState<Project[]>([
     {
@@ -85,10 +89,14 @@ const AdminProjects = () => {
     description: '',
     tags: [],
     githubUrl: '',
-    imageUrl: ''
+    imageUrl: null
   });
   const [newTag, setNewTag] = useState('');
   const [showForm, setShowForm] = useState(false);
+  
+  // File upload state
+  const [projectImageFile, setProjectImageFile] = useState<File | null>(null);
+  const [projectImagePreview, setProjectImagePreview] = useState<string | null>(null);
 
   // Handle adding a tag
   const handleAddTag = () => {
@@ -117,6 +125,38 @@ const AdminProjects = () => {
       [name]: value
     });
   };
+  
+  // Handle image upload
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    
+    if (file) {
+      setProjectImageFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setProjectImagePreview(previewUrl);
+      
+      // Update current project with the preview URL
+      setCurrentProject({
+        ...currentProject,
+        imageUrl: previewUrl
+      });
+    }
+  };
+  
+  // Reset image
+  const handleResetImage = () => {
+    if (projectImagePreview) {
+      URL.revokeObjectURL(projectImagePreview);
+    }
+    setProjectImageFile(null);
+    setProjectImagePreview(null);
+    
+    // Update current project to remove image
+    setCurrentProject({
+      ...currentProject,
+      imageUrl: null
+    });
+  };
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
@@ -129,8 +169,16 @@ const AdminProjects = () => {
     
     if (formMode === 'add') {
       setProjects([...projects, projectWithId]);
+      toast({
+        title: "Project Added",
+        description: "Your project has been added successfully.",
+      });
     } else {
       setProjects(projects.map(p => p.id === projectWithId.id ? projectWithId : p));
+      toast({
+        title: "Project Updated",
+        description: "Your project has been updated successfully.",
+      });
     }
     
     // Reset form
@@ -140,8 +188,10 @@ const AdminProjects = () => {
       description: '',
       tags: [],
       githubUrl: '',
-      imageUrl: ''
+      imageUrl: null
     });
+    setProjectImageFile(null);
+    setProjectImagePreview(null);
     setShowForm(false);
   };
 
@@ -149,12 +199,44 @@ const AdminProjects = () => {
   const handleEdit = (project: Project) => {
     setFormMode('edit');
     setCurrentProject(project);
+    
+    if (project.imageUrl) {
+      setProjectImagePreview(project.imageUrl);
+    } else {
+      setProjectImagePreview(null);
+    }
+    
     setShowForm(true);
   };
 
   // Handle deleting a project
   const handleDelete = (id: string) => {
     setProjects(projects.filter(p => p.id !== id));
+    toast({
+      title: "Project Deleted",
+      description: "The project has been removed.",
+      variant: "destructive",
+    });
+  };
+
+  // Handle cancel form
+  const handleCancelForm = () => {
+    setCurrentProject({
+      id: '',
+      title: '',
+      description: '',
+      tags: [],
+      githubUrl: '',
+      imageUrl: null
+    });
+    
+    if (projectImagePreview && !projectImagePreview.startsWith('/')) {
+      URL.revokeObjectURL(projectImagePreview);
+    }
+    
+    setProjectImageFile(null);
+    setProjectImagePreview(null);
+    setShowForm(false);
   };
 
   return (
@@ -171,8 +253,10 @@ const AdminProjects = () => {
               description: '',
               tags: [],
               githubUrl: '',
-              imageUrl: ''
+              imageUrl: null
             });
+            setProjectImageFile(null);
+            setProjectImagePreview(null);
             setShowForm(true);
           }}
           className="bg-purple hover:bg-purple/90"
@@ -228,16 +312,71 @@ const AdminProjects = () => {
                 />
               </div>
               
+              {/* Project Image Upload */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-300">Image URL</label>
-                <Input
-                  name="imageUrl"
-                  value={currentProject.imageUrl}
-                  onChange={handleInputChange}
-                  placeholder="URL to project image"
-                  className="bg-white/10 border-white/20 text-white"
-                  required
-                />
+                <Label htmlFor="projectImage" className="text-sm text-gray-300 flex items-center gap-2">
+                  <Image className="h-4 w-4 text-purple" />
+                  Project Image
+                </Label>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Image Preview */}
+                  <div className="border border-dashed border-white/20 rounded-md p-4 flex items-center justify-center bg-white/5 min-h-[150px]">
+                    {projectImagePreview ? (
+                      <div className="relative w-full">
+                        <img 
+                          src={projectImagePreview} 
+                          alt="Project Preview" 
+                          className="max-h-[150px] mx-auto object-contain rounded-md"
+                        />
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-400">
+                        <Image className="h-12 w-12 mx-auto mb-2 text-gray-500" />
+                        <p>No image selected</p>
+                        <p className="text-xs">Image will be displayed here after upload</p>
+                      </div>  
+                    )}
+                  </div>
+                  
+                  {/* Upload Controls */}
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <Input
+                        id="projectImage"
+                        type="file"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                      <Button 
+                        type="button"
+                        variant="outline" 
+                        className="w-full border-dashed border-white/20 hover:bg-white/5 text-white flex gap-2"
+                        onClick={() => document.getElementById('projectImage')?.click()}
+                      >
+                        <Upload className="h-4 w-4" />
+                        Upload Image
+                      </Button>
+                    </div>
+                    
+                    <p className="text-xs text-gray-400">
+                      Accepted formats: JPG, PNG, WEBP. Max file size: 2MB
+                    </p>
+                    
+                    {projectImagePreview && (
+                      <Button 
+                        type="button" 
+                        variant="outline"
+                        size="sm" 
+                        className="text-red-400 border-red-400/20 hover:bg-red-400/10 hover:text-red-300"
+                        onClick={handleResetImage}
+                      >
+                        Remove Image
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
               
               <div className="space-y-2">
@@ -282,7 +421,7 @@ const AdminProjects = () => {
           <CardFooter className="flex gap-2 justify-end border-t border-white/10 pt-4">
             <Button
               variant="outline"
-              onClick={() => setShowForm(false)}
+              onClick={handleCancelForm}
               className="border-white/20 text-white hover:bg-white/10"
             >
               Cancel

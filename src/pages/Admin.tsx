@@ -60,7 +60,7 @@ const Admin = () => {
     navigate('/');
   };
   
-  // Navigation items for sidebar - fix the type of id to match AdminSection
+  // Navigation items for sidebar
   const navItems = [
     { id: "overview" as AdminSection, label: "Dashboard Overview", icon: LayoutDashboard },
     { id: "profile" as AdminSection, label: "Manage Profile", icon: User },
