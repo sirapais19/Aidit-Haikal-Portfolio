@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -19,10 +20,12 @@ import AdminCertifications from "../components/admin/AdminCertifications";
 import AdminExperience from "../components/admin/AdminExperience";
 import AdminEducation from "../components/admin/AdminEducation";
 import AdminMessages from "../components/admin/AdminMessages";
+import AdminProfile from "../components/admin/AdminProfile";
 import { useToast } from "@/hooks/use-toast";
 
 export type AdminSection = 
   | "overview" 
+  | "profile" 
   | "projects" 
   | "skills" 
   | "certifications" 
@@ -60,6 +63,7 @@ const Admin = () => {
   // Navigation items for sidebar - fix the type of id to match AdminSection
   const navItems = [
     { id: "overview" as AdminSection, label: "Dashboard Overview", icon: LayoutDashboard },
+    { id: "profile" as AdminSection, label: "Manage Profile", icon: User },
     { id: "projects" as AdminSection, label: "Manage Projects", icon: FileText },
     { id: "skills" as AdminSection, label: "Manage Skills", icon: Award },
     { id: "certifications" as AdminSection, label: "Manage Certifications", icon: Award },
@@ -83,6 +87,7 @@ const Admin = () => {
         <div className="max-w-6xl mx-auto">
           {/* Main content based on active section */}
           {activeSection === "overview" && <AdminOverview />}
+          {activeSection === "profile" && <AdminProfile />}
           {activeSection === "projects" && <AdminProjects />}
           {activeSection === "skills" && <AdminSkills />}
           {activeSection === "certifications" && <AdminCertifications />}
