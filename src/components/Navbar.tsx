@@ -2,10 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +18,13 @@ const Navbar = () => {
       }
     };
 
+    // Check if user is logged in from localStorage
+    const checkLoginStatus = () => {
+      const loginStatus = localStorage.getItem('isLoggedIn');
+      setIsLoggedIn(loginStatus === 'true');
+    };
+
+    checkLoginStatus();
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -54,7 +63,18 @@ const Navbar = () => {
               {item}
             </button>
           ))}
-          <Button className="bg-purple hover:bg-purple/90 text-white">Download Resume</Button>
+          
+          {isLoggedIn ? (
+            <Link to="/admin">
+              <Button className="bg-purple hover:bg-purple/90 text-white">Admin Console</Button>
+            </Link>
+          ) : (
+            <Link to="/login">
+              <Button className="bg-purple hover:bg-purple/90 text-white">Admin Login</Button>
+            </Link>
+          )}
+          
+          <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white">Download Resume</Button>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -80,7 +100,18 @@ const Navbar = () => {
                 {item}
               </button>
             ))}
-            <Button className="bg-purple hover:bg-purple/90 text-white w-full mt-4">
+            
+            {isLoggedIn ? (
+              <Link to="/admin" className="w-full">
+                <Button className="bg-purple hover:bg-purple/90 text-white w-full">Admin Console</Button>
+              </Link>
+            ) : (
+              <Link to="/login" className="w-full">
+                <Button className="bg-purple hover:bg-purple/90 text-white w-full">Admin Login</Button>
+              </Link>
+            )}
+            
+            <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white w-full mt-4">
               Download Resume
             </Button>
           </nav>
