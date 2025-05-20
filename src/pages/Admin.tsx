@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -58,15 +57,15 @@ const Admin = () => {
     navigate('/');
   };
   
-  // Navigation items for sidebar
+  // Navigation items for sidebar - fix the type of id to match AdminSection
   const navItems = [
-    { id: "overview", label: "Dashboard Overview", icon: LayoutDashboard },
-    { id: "projects", label: "Manage Projects", icon: FileText },
-    { id: "skills", label: "Manage Skills", icon: Award },
-    { id: "certifications", label: "Manage Certifications", icon: Award },
-    { id: "experience", label: "Manage Experience", icon: Briefcase },
-    { id: "education", label: "Manage Education", icon: GraduationCap },
-    { id: "messages", label: "Contact Messages", icon: MessageSquare },
+    { id: "overview" as AdminSection, label: "Dashboard Overview", icon: LayoutDashboard },
+    { id: "projects" as AdminSection, label: "Manage Projects", icon: FileText },
+    { id: "skills" as AdminSection, label: "Manage Skills", icon: Award },
+    { id: "certifications" as AdminSection, label: "Manage Certifications", icon: Award },
+    { id: "experience" as AdminSection, label: "Manage Experience", icon: Briefcase },
+    { id: "education" as AdminSection, label: "Manage Education", icon: GraduationCap },
+    { id: "messages" as AdminSection, label: "Contact Messages", icon: MessageSquare },
   ];
 
   return (

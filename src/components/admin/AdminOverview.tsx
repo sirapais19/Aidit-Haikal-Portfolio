@@ -1,6 +1,5 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Award, MessageSquare, Clock } from "lucide-react";
+import { FileText, Award, MessageSquare, Clock, Briefcase } from "lucide-react";
 
 const AdminOverview = () => {
   // Mock data for the overview
