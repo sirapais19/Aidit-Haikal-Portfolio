@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -6,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { AlertCircle } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebaseConfig"; // Make sure this path matches your project structure
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,18 +15,16 @@ const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Validate email format
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     let newErrors = { email: '', password: '' };
     let isValid = true;
 
-    // Validate email
     if (!email) {
       newErrors.email = 'Email is required';
       isValid = false;
@@ -34,7 +33,6 @@ const Login = () => {
       isValid = false;
     }
 
-    // Validate password
     if (!password) {
       newErrors.password = 'Password is required';
       isValid = false;
@@ -43,13 +41,21 @@ const Login = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      // Since this is just a prototype, we'll simulate a successful login
-      localStorage.setItem('isLoggedIn', 'true');
-      toast({
-        title: "Login Successful",
-        description: "Welcome to the admin console.",
-      });
-      navigate('/admin');
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem('isLoggedIn', 'true');
+        toast({
+          title: "Login Successful",
+          description: "Welcome to the admin console.",
+        });
+        navigate('/admin');
+      } catch (error: any) {
+        toast({
+          title: "Login Failed",
+          description: error.message || "Invalid credentials. Please try again.",
+          variant: "destructive"
+        });
+      }
     }
   };
 
@@ -80,7 +86,7 @@ const Login = () => {
                 </div>
               )}
             </div>
-            
+
             <div className="space-y-2">
               <label htmlFor="password" className="text-sm text-gray-300">Password</label>
               <Input
@@ -97,7 +103,7 @@ const Login = () => {
                 </div>
               )}
             </div>
-            
+
             <Button 
               type="submit" 
               className="w-full bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white font-medium"
@@ -108,7 +114,7 @@ const Login = () => {
         </CardContent>
         <CardFooter className="flex justify-center border-t border-white/10 pt-4">
           <p className="text-sm text-gray-400">
-            This is a prototype. Use any credentials.
+            This is a prototype. Use your Firebase credentials.
           </p>
         </CardFooter>
       </Card>

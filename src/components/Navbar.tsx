@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X } from 'lucide-react';
@@ -74,7 +73,13 @@ const Navbar = () => {
             </Link>
           )}
           
-          <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white">Download Resume</Button>
+          <a
+            href="/Aidit_RESUME.pdf"
+            download
+            className="w-full"
+          >
+            <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white">Download Resume</Button>
+          </a>
         </nav>
 
         {/* Mobile Menu Toggle */}
@@ -111,9 +116,15 @@ const Navbar = () => {
               </Link>
             )}
             
-            <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white w-full mt-4">
-              Download Resume
-            </Button>
+            <a
+              href="/Aidit_RESUME.pdf"
+              download
+              className="w-full"
+            >
+              <Button className="bg-gradient-to-r from-purple to-cyan hover:opacity-90 text-white w-full mt-4">
+                Download Resume
+              </Button>
+            </a>
           </nav>
         </div>
       )}
