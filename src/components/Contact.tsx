@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Send, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 export const Contact = () => {
@@ -44,7 +44,7 @@ export const Contact = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
           {/* Contact Form */}
           <div className="backdrop-blur-md bg-white/10 rounded-2xl p-8 border border-white/20 shadow-2xl animate-slide-in-left">
             <h3 className="text-2xl font-bold mb-6 text-cyan-300">Send Me a Message</h3>
@@ -92,8 +92,9 @@ export const Contact = () => {
             </form>
           </div>
           
-          {/* Contact Info */}
-          <div className="space-y-8 animate-slide-in-right">
+          {/* Contact Methods Grid */}
+          <div className="space-y-6 animate-slide-in-right">
+            {/* Email Section */}
             <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-2xl">
               <h3 className="text-2xl font-bold mb-4 text-cyan-300">Get In Touch</h3>
               <div className="space-y-4">
@@ -113,6 +114,7 @@ export const Contact = () => {
               </div>
             </div>
             
+            {/* Online Presence Section */}
             <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-2xl">
               <h3 className="text-2xl font-bold mb-4 text-cyan-300">Online Presence</h3>
               <div className="space-y-4">
@@ -145,6 +147,28 @@ export const Contact = () => {
                   </a>
                 </Button>
               </div>
+            </div>
+
+            {/* WhatsApp Section */}
+            <div className="backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-2xl">
+              <h3 className="text-2xl font-bold mb-4 text-cyan-300">Message Me on WhatsApp</h3>
+              <p className="text-gray-300 mb-6 text-sm">
+                Fastest way to reach me directly for questions, collaborations, or freelance work.
+              </p>
+              <Button 
+                asChild
+                className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-green-500/30 animate-pulse"
+              >
+                <a 
+                  href="https://wa.me/60133694584" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center"
+                >
+                  <MessageCircle className="h-5 w-5 mr-2 group-hover:animate-bounce" />
+                  💬 Chat on WhatsApp
+                </a>
+              </Button>
             </div>
           </div>
         </div>
