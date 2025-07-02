@@ -38,7 +38,7 @@ export const Projects = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 relative overflow-hidden">
+      <section id="projects" className="py-20 px-4 bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5"></div>
       

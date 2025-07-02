@@ -1,32 +1,31 @@
-
 import { Button } from "@/components/ui/button";
 import { FileText, Award } from "lucide-react";
 
 export const Certifications = () => {
   const certifications = [
-    {
-      title: "Getting Started with AI on Jetson Nano",
-      issuer: "NVIDIA",
-      link: "/lovable-uploads/file-H5s9oXFQoEm6oxokM5DTsr"
-    },
-    {
-      title: "Building Video AI Applications at the Edge",
-      issuer: "NVIDIA", 
-      link: "/lovable-uploads/file-GajeGs6iLJPwRQdwYXuyp2"
-    },
-    {
-      title: "CCNAv7: Introduction to Networks",
-      issuer: "Cisco Networking Academy",
-      link: "/lovable-uploads/file-23x1A4xGVE4EVqd77EpAfe"
-    }
-  ];
+      {
+        title: "Getting Started with AI on Jetson Nano",
+        issuer: "NVIDIA",
+        link: "/certificates/Certificate_NVIDIA.pdf"
+      },
+      {
+        title: "Building Video AI Applications at the Edge",
+        issuer: "NVIDIA",
+        link: "/certificates/Certificate_NVIDIA2.pdf"
+      },
+      {
+        title: "CCNAv7: Introduction to Networks",
+        issuer: "Cisco Networking Academy",
+        link: "/certificates/CCNA_Intro_Networks.pdf"
+      }
+    ];
 
   return (
     <section className="py-20 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-cyan-400/20 rounded-full animate-ping"></div>
       <div className="absolute bottom-20 right-10 w-16 h-16 bg-purple-500/20 rounded-full animate-pulse"></div>
-      
+
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
@@ -37,7 +36,7 @@ export const Certifications = () => {
             Professional certifications that validate my expertise in emerging technologies
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {certifications.map((cert, index) => (
             <div 
@@ -47,7 +46,7 @@ export const Certifications = () => {
             >
               {/* Glassmorphism overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
+
               <div className="relative z-10">
                 <div className="mb-4">
                   <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">

@@ -33,21 +33,22 @@ export const Hero = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 animate-bounce-in">
-            <Button 
-              size="lg" 
-              className="group bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50"
+            <a 
+              href="/Aidit_RESUME.pdf" 
+              download 
+              className="group flex items-center justify-center rounded-md bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50"
             >
               <Download className="mr-2 h-5 w-5 group-hover:animate-bounce" />
               ⬇️ Download Resume
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="group border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50 backdrop-blur-sm"
+            </a>
+
+            <a 
+              href="#projects"
+              className="group flex items-center justify-center rounded-md border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 px-8 py-4 text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-400/50 backdrop-blur-sm"
             >
               🚀 View My Work
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            </a>
           </div>
         </div>
         
