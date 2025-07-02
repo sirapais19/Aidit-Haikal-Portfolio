@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 export const Projects = () => {
   const projects = [
@@ -38,53 +38,64 @@ export const Projects = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+    <section className="py-20 px-4 bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 relative overflow-hidden">
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5"></div>
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
             Featured Projects
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto mb-8 animate-pulse"></div>
+          <p className="text-xl text-blue-200 max-w-3xl mx-auto">
             A showcase of my development work, from AI-powered applications to enterprise systems
           </p>
         </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div 
               key={index} 
-              className={`bg-gradient-to-br ${project.featured ? 'from-blue-50 to-purple-50' : 'from-gray-50 to-blue-50'} rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${project.featured ? 'md:col-span-2 lg:col-span-1' : ''}`}
+              className={`group relative backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 ${project.featured ? 'md:col-span-2 lg:col-span-1 border-cyan-400/50' : ''}`}
+              style={{ animationDelay: `${index * 100}ms` }}
             >
+              {/* Glassmorphism overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/0 rounded-2xl"></div>
+              
               {project.featured && (
-                <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4 inline-block">
-                  Featured Project
+                <div className="absolute -top-3 left-6 bg-gradient-to-r from-cyan-400 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold animate-bounce">
+                  ⭐ Featured Project
                 </div>
               )}
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {project.title}
-              </h3>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                {project.description}
-              </p>
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.tags.map((tag, tagIndex) => (
-                  <span 
-                    key={tagIndex} 
-                    className="bg-white px-3 py-1 rounded-full text-sm font-medium text-gray-700 shadow-sm"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              
+              <div className="relative z-10">
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-gray-300 mb-4 leading-relaxed">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag, tagIndex) => (
+                    <span 
+                      key={tagIndex} 
+                      className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-400/30 px-3 py-1 rounded-full text-sm font-medium text-cyan-300 hover:border-cyan-400/60 transition-colors"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <Button 
+                  asChild
+                  className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
+                >
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    🔗 View Project
+                    <ExternalLink className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </Button>
               </div>
-              <Button 
-                asChild
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white transition-all duration-300"
-              >
-                <a href={project.link} target="_blank" rel="noopener noreferrer">
-                  View Project
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
             </div>
           ))}
         </div>

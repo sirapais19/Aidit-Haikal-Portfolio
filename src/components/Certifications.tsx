@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { FileText } from "lucide-react";
+import { FileText, Award } from "lucide-react";
 
 export const Certifications = () => {
   const certifications = [
@@ -22,39 +22,54 @@ export const Certifications = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+    <section className="py-20 px-4 bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute top-20 left-10 w-20 h-20 bg-cyan-400/20 rounded-full animate-ping"></div>
+      <div className="absolute bottom-20 right-10 w-16 h-16 bg-purple-500/20 rounded-full animate-pulse"></div>
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
             Certifications
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-8"></div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto mb-8 animate-pulse"></div>
+          <p className="text-xl text-blue-200 max-w-3xl mx-auto">
             Professional certifications that validate my expertise in emerging technologies
           </p>
         </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {certifications.map((cert, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
-              <div className="mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-4">
-                  <FileText className="h-6 w-6 text-white" />
+            <div 
+              key={index} 
+              className="group relative backdrop-blur-md bg-white/10 rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              {/* Glassmorphism overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="relative z-10">
+                <div className="mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <Award className="h-8 w-8 text-white animate-pulse" />
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 text-center group-hover:text-cyan-300 transition-colors">
+                    {cert.title}
+                  </h3>
+                  <p className="text-cyan-400 font-semibold mb-4 text-center">
+                    {cert.issuer}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
-                  {cert.title}
-                </h3>
-                <p className="text-blue-600 font-semibold mb-4">
-                  {cert.issuer}
-                </p>
+                <Button 
+                  asChild
+                  className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/30"
+                >
+                  <a href={cert.link} target="_blank" rel="noopener noreferrer">
+                    📄 View Certificate
+                    <FileText className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
               </div>
-              <Button 
-                asChild
-                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white transition-all duration-300"
-              >
-                <a href={cert.link} target="_blank" rel="noopener noreferrer">
-                  View Certificate
-                </a>
-              </Button>
             </div>
           ))}
         </div>
